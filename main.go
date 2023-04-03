@@ -1,9 +1,11 @@
 package main
 
 import (
-	"golang.org/x/sync/errgroup"
+	"log"
 	"net/http"
 	"tsp_gin/router"
+
+	"golang.org/x/sync/errgroup"
 )
 
 var (
@@ -11,7 +13,6 @@ var (
 )
 
 func main() {
-
 	serverA := &http.Server{
 		Addr:    ":8080",
 		Handler: router.TspRouter(),
@@ -20,4 +21,8 @@ func main() {
 	g.Go(func() error {
 		return serverA.ListenAndServe()
 	})
+
+	if err := g.Wait(); err != nil {
+		log.Fatal(err)
+	}
 }

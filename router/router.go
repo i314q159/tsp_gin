@@ -4,6 +4,7 @@ import (
 	"io"
 	"net/http"
 	"os"
+	"time"
 
 	"github.com/gin-gonic/gin"
 )
@@ -12,7 +13,8 @@ func TspRouter() http.Handler {
 	r := gin.Default()
 
 	//log
-	f, _ := os.Create(".log/gin.log")
+	dt := time.Now().Format("2006-01-02")
+	f, _ := os.Create("./log/" + dt + ".log")
 	gin.DefaultWriter = io.MultiWriter(f)
 
 	r.LoadHTMLGlob("./static/html/*")
@@ -49,10 +51,6 @@ func TspRouter() http.Handler {
 		c.JSON(http.StatusOK, gin.H{
 			"message": "DELETE",
 		})
-	})
-
-	r.GET("/ping", func(c *gin.Context) {
-		c.String(http.StatusOK, "pong")
 	})
 
 	return r
