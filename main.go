@@ -1,50 +1,42 @@
 package main
 
 import (
+	"log"
 	"net/http"
+	"tsp_gin/router"
 
-	"github.com/gin-gonic/gin"
+	"golang.org/x/sync/errgroup"
+)
+
+var (
+	g errgroup.Group
 )
 
 func main() {
-	r := gin.Default()
+	server_A := &http.Server{
+		Addr:    ":8080",
+		Handler: router.Router_A(),
+		// ReadTimeout:  5 * time.Second,
+		// WriteTimeout: 10 * time.Second,
+	}
 
-	r.LoadHTMLGlob("./static/html/*")
-	r.Static("/dwz", "./statics")
+	server_B := &http.Server{
+		Addr:    ":8081",
+		Handler: router.Router_B(),
+		// ReadTimeout:  5 * time.Second,
+		// WriteTimeout: 10 * time.Second,
+	}
 
-	r.GET("/", func(c *gin.Context) {
-		c.HTML(http.StatusOK, "index.html", nil)
-	})
-	r.GET("/login", func(c *gin.Context) {
-		c.HTML(http.StatusOK, "login.html", nil)
-	})
-
-	// api
-	r.GET("/api/v1/user", func(c *gin.Context) {
-		c.JSON(http.StatusOK, gin.H{
-			"message": "GET",
-		})
-	})
-	r.POST("/api/v1/user", func(c *gin.Context) {
-		name := c.Query("name")
-		email := c.Query("email")
-
-		c.JSON(http.StatusOK, gin.H{
-			"name":  name,
-			"email": email,
-		})
-	})
-	r.PUT("/api/v1/user", func(c *gin.Context) {
-		c.JSON(http.StatusOK, gin.H{
-			"message": "PUT",
-		})
-	})
-	r.DELETE("/api/v1/user", func(c *gin.Context) {
-		c.JSON(http.StatusOK, gin.H{
-			"message": "DELETE",
-		})
+	g.Go(func() error {
+		return server_A.ListenAndServe()
 	})
 
-	//port
-	r.Run(":8080")
+	g.Go(func() error {
+		return server_B.ListenAndServe()
+	})
+
+	if err := g.Wait(); err != nil {
+		log.Fatal(err)
+	}
+
 }
