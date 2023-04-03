@@ -8,7 +8,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func Router_A() http.Handler {
+func RouterA() http.Handler {
 	r := gin.Default()
 
 	//log
