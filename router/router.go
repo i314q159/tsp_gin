@@ -8,7 +8,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func RouterA() http.Handler {
+func TspRouter() http.Handler {
 	r := gin.Default()
 
 	//log
