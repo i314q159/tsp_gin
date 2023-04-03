@@ -63,7 +63,7 @@ def plot_tsp(path, cities):
         plt.plot([x[path[i]], x[path[i + 1]]], [y[path[i]], y[path[i + 1]]], "b")
     plt.plot([x[path[-1]], x[path[0]]], [y[path[-1]], y[path[0]]], "b")
 
-    plt.savefig("./img/tsp_greed.png")
+    plt.savefig("../tmp/tsp_greed.png")
     # plt.show()
 
 
