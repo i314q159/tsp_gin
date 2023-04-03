@@ -10,48 +10,33 @@ import (
 )
 
 func TspRouter() http.Handler {
-	r := gin.Default()
+	engine := gin.Default()
 
 	//log
 	dt := time.Now().Format("2006-01-02")
 	f, _ := os.Create("./log/" + dt + ".log")
 	gin.DefaultWriter = io.MultiWriter(f)
 
-	r.LoadHTMLGlob("./static/html/*")
-	r.StaticFS("/dwz", http.Dir("./statics"))
+	engine.LoadHTMLGlob("./static/html/*")
+	engine.StaticFS("/dwz", http.Dir("./statics"))
 
-	r.GET("/", func(c *gin.Context) {
-		c.HTML(http.StatusOK, "index.html", nil)
+	engine.GET("/", func(context *gin.Context) {
+		context.HTML(http.StatusOK, "index.html", nil)
 	})
-	r.GET("/login", func(c *gin.Context) {
-		c.HTML(http.StatusOK, "login.html", nil)
+	engine.GET("/login", func(ccontext *gin.Context) {
+		ccontext.HTML(http.StatusOK, "login.html", nil)
+	})
+	engine.NoRoute(func(context *gin.Context) {
+		context.HTML(http.StatusNotFound, "404.html", nil)
 	})
 
 	//api
-	r.GET("/api/v1/user", func(c *gin.Context) {
-		c.JSON(http.StatusOK, gin.H{
-			"message": "GET",
-		})
-	})
-	r.POST("/api/v1/user", func(c *gin.Context) {
-		name := c.Query("name")
-		email := c.Query("email")
-
-		c.JSON(http.StatusOK, gin.H{
-			"name":  name,
-			"email": email,
-		})
-	})
-	r.PUT("/api/v1/user", func(c *gin.Context) {
-		c.JSON(http.StatusOK, gin.H{
-			"message": "PUT",
-		})
-	})
-	r.DELETE("/api/v1/user", func(c *gin.Context) {
-		c.JSON(http.StatusOK, gin.H{
-			"message": "DELETE",
-		})
+	engine.Any("/api/v1/user", func(context *gin.Context) {
+		switch context.Request.Method {
+		case http.MethodGet:
+			context.JSON(http.StatusOK, gin.H{"method": "GET"})
+		}
 	})
 
-	return r
+	return engine
 }
