@@ -18,7 +18,6 @@ func TspRouter() http.Handler {
 	gin.DefaultWriter = io.MultiWriter(f)
 
 	engine.LoadHTMLGlob("./static/html/*")
-	engine.StaticFS("/dwz", http.Dir("./statics"))
 
 	engine.GET("/", func(context *gin.Context) {
 		context.HTML(http.StatusOK, "index.html", nil)
@@ -35,6 +34,8 @@ func TspRouter() http.Handler {
 		switch context.Request.Method {
 		case http.MethodGet:
 			context.JSON(http.StatusOK, gin.H{"method": "GET"})
+		case http.MethodPut:
+			context.JSON(http.StatusOK, gin.H{"method": "PUT"})
 		}
 	})
 
