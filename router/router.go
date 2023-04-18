@@ -5,7 +5,6 @@ import (
 	"net/http"
 	"os"
 	"time"
-	"tsp_gin/database"
 
 	"github.com/gin-gonic/gin"
 )
