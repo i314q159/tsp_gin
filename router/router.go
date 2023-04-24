@@ -5,6 +5,7 @@ import (
 	"net/http"
 	"os"
 	"time"
+	"tsp_gin/database"
 
 	"github.com/gin-gonic/gin"
 )
@@ -30,16 +31,24 @@ func TspRouter() http.Handler {
 	})
 
 	//api
+	userAPI(engine)
+
+	return engine
+}
+
+func userAPI(engine *gin.Engine) {
 	engine.Any("/api/v1/user", func(context *gin.Context) {
 		switch context.Request.Method {
 		case http.MethodGet:
-			// database.AddUser()
-
 			context.JSON(http.StatusOK, gin.H{"method": "GET"})
+
 		case http.MethodPut:
 			context.JSON(http.StatusOK, gin.H{"method": "PUT"})
+
+		case http.MethodPost:
+			// database.AddUserByQuery(context)
+			database.AddUserByBody(context)
+			context.JSON(http.StatusOK, gin.H{"method": "POST"})
 		}
 	})
-
-	return engine
 }
