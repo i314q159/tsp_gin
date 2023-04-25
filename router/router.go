@@ -13,23 +13,12 @@ import (
 func TspRouter() http.Handler {
 	engine := gin.Default()
 
-	//log
-	dt := time.Now().Format("2006-01-02")
-	f, _ := os.Create("./log/" + dt + ".log")
-	gin.DefaultWriter = io.MultiWriter(f)
+	// log
+	logger()
 
-	engine.LoadHTMLGlob("./static/html/*")
-
-	engine.GET("/", func(context *gin.Context) {
-		context.HTML(http.StatusOK, "index.html", nil)
-	})
-	engine.GET("/login", func(ccontext *gin.Context) {
-		ccontext.HTML(http.StatusOK, "login.html", nil)
-	})
-	engine.NoRoute(func(context *gin.Context) {
-		context.HTML(http.StatusNotFound, "404.html", nil)
-	})
-
+	// web page
+	webPage(engine)
+	
 	//api
 	userAPI(engine)
 
@@ -44,5 +33,25 @@ func userAPI(engine *gin.Engine) {
 		case http.MethodPut:
 			database.UpdateUser(context)
 		}
+	})
+}
+
+func logger() {
+	dt := time.Now().Format("2006-01-02")
+	f, _ := os.Create("./log/" + dt + ".log")
+	gin.DefaultWriter = io.MultiWriter(f)
+}
+
+func webPage(engine *gin.Engine) {
+	engine.LoadHTMLGlob("./static/html/*")
+
+	engine.GET("/", func(context *gin.Context) {
+		context.HTML(http.StatusOK, "index.html", nil)
+	})
+	engine.GET("/login", func(ccontext *gin.Context) {
+		ccontext.HTML(http.StatusOK, "login.html", nil)
+	})
+	engine.NoRoute(func(context *gin.Context) {
+		context.HTML(http.StatusNotFound, "404.html", nil)
 	})
 }
