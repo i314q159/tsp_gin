@@ -1,9 +1,11 @@
 package router
 
 import (
+	"io"
 	"net/http"
+	"os"
+	"time"
 	"tsp_gin/database"
-	"tsp_gin/hook"
 
 	"github.com/gin-gonic/gin"
 )
@@ -12,7 +14,7 @@ func TspRouter() http.Handler {
 	engine := gin.Default()
 
 	// log
-	hook.Logger()
+	logger()
 
 	// web page
 	webPage(engine)
@@ -46,4 +48,10 @@ func webPage(engine *gin.Engine) {
 	engine.NoRoute(func(context *gin.Context) {
 		context.HTML(http.StatusNotFound, "404.html", nil)
 	})
+}
+
+func logger() {
+	dt := time.Now().Format("2006-01-02")
+	f, _ := os.Create("./log/" + dt + ".log")
+	gin.DefaultWriter = io.MultiWriter(f)
 }
