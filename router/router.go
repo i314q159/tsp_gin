@@ -1,11 +1,9 @@
 package router
 
 import (
-	"io"
 	"net/http"
-	"os"
-	"time"
 	"tsp_gin/database"
+	"tsp_gin/hook"
 
 	"github.com/gin-gonic/gin"
 )
@@ -14,11 +12,11 @@ func TspRouter() http.Handler {
 	engine := gin.Default()
 
 	// log
-	logger()
+	hook.Logger()
 
 	// web page
 	webPage(engine)
-	
+
 	//api
 	userAPI(engine)
 
@@ -34,12 +32,6 @@ func userAPI(engine *gin.Engine) {
 			database.UpdateUser(context)
 		}
 	})
-}
-
-func logger() {
-	dt := time.Now().Format("2006-01-02")
-	f, _ := os.Create("./log/" + dt + ".log")
-	gin.DefaultWriter = io.MultiWriter(f)
 }
 
 func webPage(engine *gin.Engine) {
