@@ -46,9 +46,7 @@ func userAPI(engine *gin.Engine) {
 			context.JSON(http.StatusOK, gin.H{"method": "PUT"})
 
 		case http.MethodPost:
-			// database.AddUserByQuery(context)
-			database.AddUserByBody(context)
-			context.JSON(http.StatusOK, gin.H{"method": "POST"})
+			database.AddUserByJsonBody(context)
 		}
 	})
 }

@@ -2,6 +2,7 @@ package database
 
 import (
 	"encoding/json"
+	"net/http"
 
 	"github.com/gin-gonic/gin"
 )
@@ -13,21 +14,17 @@ type User struct {
 	NickName string `gorm:"size:50"`
 }
 
-// TODO: 以邮箱为准，防止重复插入
-func AddUserByQuery(context *gin.Context) {
-	db := Conn()
+// func AddUserByQuery(context *gin.Context) {
+// 	db := Conn()
 
-	// Create
-	db.Create(&User{
-		ID:       0,
-		Email:    context.Query("email"),
-		PassWord: context.Query("password"),
-		NickName: context.Query("nickname"),
-	})
-}
+// 	db.FirstOrCreate(&User{
+// 		Email:    context.Query("email"),
+// 		PassWord: context.Query("password"),
+// 		NickName: context.Query("nickname"),
+// 	})
+// }
 
-// TODO: 以邮箱为准，防止重复插入
-func AddUserByBody(context *gin.Context) {
+func AddUserByJsonBody(context *gin.Context) {
 	var user User
 	err := json.NewDecoder(context.Request.Body).Decode(&user)
 
@@ -36,10 +33,15 @@ func AddUserByBody(context *gin.Context) {
 	}
 
 	db := Conn()
-	db.Create(&User{
-		ID:       0,
+
+	db.Where(User{Email: user.Email}).FirstOrCreate(&User{
 		Email:    user.Email,
 		PassWord: user.PassWord,
 		NickName: user.NickName,
+	})
+
+	context.JSON(http.StatusOK, gin.H{
+		"nickname": user.NickName,
+		"email":    user.Email,
 	})
 }
