@@ -39,14 +39,10 @@ func TspRouter() http.Handler {
 func userAPI(engine *gin.Engine) {
 	engine.Any("/api/v1/user", func(context *gin.Context) {
 		switch context.Request.Method {
-		case http.MethodGet:
-			context.JSON(http.StatusOK, gin.H{"method": "GET"})
-
-		case http.MethodPut:
-			context.JSON(http.StatusOK, gin.H{"method": "PUT"})
-
 		case http.MethodPost:
-			database.AddUserByJsonBody(context)
+			database.AddUser(context)
+		case http.MethodPut:
+			database.UpdateUser(context)
 		}
 	})
 }
