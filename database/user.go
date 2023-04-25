@@ -14,16 +14,6 @@ type User struct {
 	NickName string `gorm:"size:50"`
 }
 
-// func AddUserByQuery(context *gin.Context) {
-// 	db := Conn()
-
-// 	db.FirstOrCreate(&User{
-// 		Email:    context.Query("email"),
-// 		PassWord: context.Query("password"),
-// 		NickName: context.Query("nickname"),
-// 	})
-// }
-
 // add user by json
 func AddUser(context *gin.Context) {
 	var user User
