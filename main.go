@@ -1,8 +1,10 @@
 package main
 
 import (
+	"fmt"
 	"log"
 	"net/http"
+	"tsp_gin/conf"
 	"tsp_gin/router"
 
 	"golang.org/x/sync/errgroup"
@@ -14,7 +16,7 @@ var (
 
 func main() {
 	serverA := &http.Server{
-		Addr:    ":8080",
+		Addr:    fmt.Sprintf("%s:%s", conf.SERVER_IP, conf.SERVER_PORT),
 		Handler: router.TspRouter(),
 	}
 

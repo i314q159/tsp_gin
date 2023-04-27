@@ -1,12 +1,15 @@
 package database
 
 import (
+	"fmt"
+	"tsp_gin/conf"
+
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 )
 
 func Conn() *gorm.DB {
-	dsn := "root:i314q159@tcp(127.0.0.1:3306)/tsp?charset=utf8mb4&parseTime=True&loc=Local"
+	dsn := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=utf8mb4&parseTime=True&loc=Local", conf.DB_USER, conf.DB_PASSWORD, conf.DB_IP, conf.DB_PORT, conf.DB_NAME)
 	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
 	if err != nil {
 		panic("failed to connect database")
