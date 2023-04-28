@@ -221,9 +221,13 @@ def gas(data):
         scale_units="xy",
     )
 
-    plt.savefig("../tmp/tsp_gas.png")
+    plt.savefig("./tmp/tsp_gas.png")
     # plt.show()
     return path_short  # 返回遗传算法结果类
+
+
+def run(data):
+    gas(data)
 
 
 if __name__ == "__main__":

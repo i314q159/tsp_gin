@@ -8,3 +8,5 @@ const DB_PORT = "3306"
 const DB_USER = "root"
 const DB_PASSWORD = "i314q159"
 const DB_NAME = "tsp"
+
+const API_VERSION = "v1"
