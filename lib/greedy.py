@@ -63,7 +63,7 @@ def plot_tsp(path, cities):
         plt.plot([x[path[i]], x[path[i + 1]]], [y[path[i]], y[path[i + 1]]], "b")
     plt.plot([x[path[-1]], x[path[0]]], [y[path[-1]], y[path[0]]], "b")
 
-    plt.savefig("./tmp/tsp_greed.png")
+    plt.savefig("./tmp/greedy.png")
     # plt.show()
 
 
@@ -72,6 +72,6 @@ if __name__ == "__main__":
     np.random.seed(random.randint(0, 10))
     cities = np.random.rand(100, 2) * 10
     path, length = tsp(cities)
-    print("路径：", path)
-    print("长度：", length)
+    # print("路径：", path)
+    # print("长度：", length)
     plot_tsp(path, cities)

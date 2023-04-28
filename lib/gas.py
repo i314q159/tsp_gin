@@ -1,8 +1,10 @@
 import random
 from math import floor
+import sys
 
 import matplotlib.pyplot as plt
 import numpy as np
+
 
 
 # 构建一个类保存遗传算法的初始化参数和函数计算
@@ -77,7 +79,7 @@ class GAs(object):
         for i in range(1, self.num):
             res += str(one_path[i] + 1) + "->"
         res += str(one_path[0] + 1) + "\n"
-        print(res)
+        # print(res)
 
     # 子代选取，根据选中概率与对应的适应度函数，采用随机遍历选择方法
     def select_sub(self):
@@ -180,7 +182,7 @@ def gas(data):
         # 每隔三十步显示当前群体的最优路径
         index = path_short.fitness.argmin()
         if (i + 1) % 20 == 0:
-            print("第" + str(i + 1) + "步后的最短的路程: " + str(path_short.fitness[index]))
+            # print("第" + str(i + 1) + "步后的最短的路程: " + str(path_short.fitness[index]))
             path_short.out_path(path_short.chrom[index, :])  # 显示每一步的最优路径
 
         # 存储每一步的最优路径及距离
@@ -221,7 +223,7 @@ def gas(data):
         scale_units="xy",
     )
 
-    plt.savefig("./tmp/tsp_gas.png")
+    plt.savefig("./tmp/gas.png")
     # plt.show()
     return path_short  # 返回遗传算法结果类
 
@@ -233,4 +235,12 @@ def run(data):
 if __name__ == "__main__":
     np.random.seed(random.randint(0, 10))
     data = np.random.rand(20, 2) * 10
-    gas(data)
+
+    args = sys.argv
+
+    # TODO: "1,2 3,4" => [[1,2], [3,4]] int
+    data = args[1]
+
+    print(data)
+    print(type(data))
+    # gas(data)

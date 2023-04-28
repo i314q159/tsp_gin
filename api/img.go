@@ -29,11 +29,14 @@ func ImgAPI(engine *gin.Engine) {
 func imgPath(engine *gin.Engine, imgName string) {
 	engine.Any(fmt.Sprintf("/api/%s/img/%s", conf.API_VERSION, imgName), func(context *gin.Context) {
 		switch context.Request.Method {
-		case http.MethodGet:
-			Algorithm(imgName)
+		case http.MethodPost:
+			cp := context.QueryArray("cp")
+
+			Algorithm(imgName, cp)
 			context.JSON(http.StatusOK, gin.H{
-				"img":  "gas.png",
-				"path": fmt.Sprintf("http://%s:%s/img/tsp_%s.png", conf.SERVER_IP, conf.SERVER_PORT, imgName),
+				"img":               "gas.png",
+				"path":              fmt.Sprintf("http://%s:%s/img/%s.png", conf.SERVER_IP, conf.SERVER_PORT, imgName),
+				"coordinate_points": cp,
 			})
 		}
 	})

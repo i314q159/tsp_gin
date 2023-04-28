@@ -36,7 +36,7 @@ def plot_tsp(path, cities):
         plt.plot([x[path[i]], x[path[i + 1]]], [y[path[i]], y[path[i + 1]]], "b")
     plt.plot([x[path[-1]], x[path[0]]], [y[path[-1]], y[path[0]]], "b")
 
-    plt.savefig("./tmp/tsp_dijkstra.png")
+    plt.savefig("./tmp/dijkstra.png")
     # plt.show()
 
 
@@ -58,6 +58,7 @@ if __name__ == "__main__":
     np.random.seed(random.randint(0, 10))
     cities = np.random.rand(20, 2) * 10
 
+    cities = [[1,1], [2,2], [3,3]]
     graph = generate_graph(cities)
     dist = dijkstra(graph, 0)
     path = [i for i, _ in sorted(enumerate(dist), key=lambda x: x[1])]
