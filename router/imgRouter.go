@@ -1,8 +1,10 @@
-package api
+package router
 
 import (
 	"fmt"
 	"net/http"
+	"os/exec"
+	"strings"
 	"tsp_gin/conf"
 
 	"github.com/gin-gonic/gin"
@@ -40,4 +42,20 @@ func imgPath(engine *gin.Engine, imgName string) {
 			})
 		}
 	})
+}
+
+func Algorithm(algorithm string, cp []string) {
+	pyName := fmt.Sprintf("./lib/%s.py", algorithm)
+
+	// ["1,2" "3,4"] => "1,2 3,4"
+	args := strings.Replace(strings.Trim(fmt.Sprint(cp), "[]"), " ", " ", -1)
+
+	cmd := exec.Command("python", pyName, args)
+	out, err := cmd.CombinedOutput()
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	fmt.Println(algorithm)
+	fmt.Println(string(out))
 }

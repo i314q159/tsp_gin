@@ -14,34 +14,37 @@ type User struct {
 	NickName string `gorm:"size:50"`
 }
 
-// add user by json
-func AddUser(context *gin.Context) {
+func UserRegister(context *gin.Context) {
 	var user User
 	err := json.NewDecoder(context.Request.Body).Decode(&user)
-
 	if err != nil {
 		panic(err)
 	}
 
 	db := Conn()
 
-	// TODO: 邮箱被占用，返回一个gin.H{"err": "邮箱被占用"}
-	// TODO: 其他字段不存在，会报错，值非空检测
-	db.Where(User{Email: user.Email}).FirstOrCreate(&User{
-		Email:    user.Email,
-		PassWord: user.PassWord,
-		NickName: user.NickName,
-	})
+	var user2 User
+	//判断邮箱是否存在
+	db.Where("email = ?", user.Email).First(&user2)
+	if user2.ID != 0 {
+		context.JSON(http.StatusUnprocessableEntity, gin.H{
+			"code":    422,
+			"message": "用户已存在",
+		})
+		return
+	}
+
+	//创建用户
+	db.Create(&user)
 
 	context.JSON(http.StatusOK, gin.H{
 		"nickname": user.NickName,
 		"email":    user.Email,
+		"msg":      "用户注册成功",
 	})
 }
 
-// update user by json
-func UpdateUser(context *gin.Context) {
-
+func UserLogin(context *gin.Context) {
 	var user User
 	err := json.NewDecoder(context.Request.Body).Decode(&user)
 
@@ -51,16 +54,27 @@ func UpdateUser(context *gin.Context) {
 
 	db := Conn()
 
-	// TODO: 邮箱不存在，返回一个值
-	// TODO: 其他字段不存在，会报错；值为""，不会更新原有数据
-	db.Where(User{Email: user.Email}).Model(&user).Updates(&User{
-		Email:    user.Email,
-		PassWord: user.PassWord,
-		NickName: user.NickName,
-	})
+	var user2 User
+	//判断邮箱是否存在
+	db.Where("email = ?", user.Email).First(&user2)
+	if user2.ID == 0 {
+		context.JSON(http.StatusUnprocessableEntity, gin.H{
+			"code":    422,
+			"message": "用户不存在",
+		})
+		return
+	}
+	if user.PassWord != user2.PassWord {
+		context.JSON(http.StatusUnprocessableEntity, gin.H{
+			"code":    422,
+			"message": "密码错误",
+		})
+		return
+	}
 
 	context.JSON(http.StatusOK, gin.H{
 		"nickname": user.NickName,
 		"email":    user.Email,
+		"msg":      "用户登录成功",
 	})
 }

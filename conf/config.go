@@ -10,6 +10,3 @@ const DB_PASSWORD = "i314q159"
 const DB_NAME = "tsp"
 
 const API_VERSION = "v1"
-
-const WEB_IP = "127.0.0.1"
-const WEB_PORT = "8080"
