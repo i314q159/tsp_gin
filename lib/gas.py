@@ -1,11 +1,9 @@
 import random
-from math import floor
 import sys
+from math import floor
 
 import matplotlib.pyplot as plt
 import numpy as np
-
-
 
 # 构建一个类保存遗传算法的初始化参数和函数计算
 class GAs(object):
@@ -233,14 +231,10 @@ def run(data):
 
 
 if __name__ == "__main__":
-    np.random.seed(random.randint(0, 10))
-    data = np.random.rand(20, 2) * 10
+    # np.random.seed(random.randint(0, 10))
+    # data = np.random.rand(20, 2) * 10
 
     args = sys.argv
+    data = [[int(num) for num in seq.split(",")] for seq in args[1].split()]
 
-    # TODO: "1,2 3,4" => [[1,2], [3,4]] int
-    data = args[1]
-
-    print(data)
-    print(type(data))
-    # gas(data)
+    gas(np.array(data))

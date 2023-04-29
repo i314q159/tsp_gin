@@ -1,6 +1,7 @@
 import heapq
 import math
 import random
+import sys
 
 import matplotlib.pyplot as plt
 import numpy as np
@@ -55,11 +56,14 @@ def generate_graph(cities):
 
 if __name__ == "__main__":
     # 示例
-    np.random.seed(random.randint(0, 10))
-    cities = np.random.rand(20, 2) * 10
+    # np.random.seed(random.randint(0, 10))
+    # cities = np.random.rand(20, 2) * 10
+    # cities = [[1,1], [2,2], [3,3]]
 
-    cities = [[1,1], [2,2], [3,3]]
-    graph = generate_graph(cities)
+    args = sys.argv
+    data = [[int(num) for num in seq.split(",")] for seq in args[1].split()]
+
+    graph = generate_graph(data)
     dist = dijkstra(graph, 0)
     path = [i for i, _ in sorted(enumerate(dist), key=lambda x: x[1])]
-    plot_tsp(path, cities)
+    plot_tsp(path, data)

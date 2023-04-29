@@ -1,5 +1,6 @@
 import math
 import random
+import sys
 
 import matplotlib.pyplot as plt
 import numpy as np
@@ -69,9 +70,13 @@ def plot_tsp(path, cities):
 
 if __name__ == "__main__":
     # 示例
-    np.random.seed(random.randint(0, 10))
-    cities = np.random.rand(100, 2) * 10
-    path, length = tsp(cities)
+    # np.random.seed(random.randint(0, 10))
+    # cities = np.random.rand(100, 2) * 10
+
+    args = sys.argv
+    data = [[int(num) for num in seq.split(",")] for seq in args[1].split()]
+
+    path, length = tsp(data)
     # print("路径：", path)
     # print("长度：", length)
-    plot_tsp(path, cities)
+    plot_tsp(path, data)
