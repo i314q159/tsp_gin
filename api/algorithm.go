@@ -7,7 +7,6 @@ import (
 )
 
 func Algorithm(algorithm string, cp []string) {
-	fmt.Println(algorithm)
 	pyName := fmt.Sprintf("./lib/%s.py", algorithm)
 
 	args := strings.Replace(strings.Trim(fmt.Sprint(cp), "[]"), " ", " ", -1)
@@ -18,6 +17,7 @@ func Algorithm(algorithm string, cp []string) {
 	if err != nil {
 		fmt.Println(err)
 	}
-	
+
+	fmt.Println(algorithm)
 	fmt.Println(string(out))
 }

@@ -25,7 +25,7 @@ func TspRouter() http.Handler {
 
 func WebRouter() http.Handler {
 	engine := gin.Default()
-	api.WebAPI(engine, "web/html")
+	api.WebAPI(engine)
 	return engine
 }
 
