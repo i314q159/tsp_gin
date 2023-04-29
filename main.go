@@ -20,17 +20,8 @@ func main() {
 		Handler: router.TspRouter(),
 	}
 
-	serverB := &http.Server{
-		Addr:    fmt.Sprintf("%s:%s", conf.WEB_IP, conf.WEB_PORT),
-		Handler: router.WebRouter(),
-	}
-
 	g.Go(func() error {
 		return serverA.ListenAndServe()
-	})
-
-	g.Go(func() error {
-		return serverB.ListenAndServe()
 	})
 
 	if err := g.Wait(); err != nil {
