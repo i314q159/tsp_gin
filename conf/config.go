@@ -1,7 +1,7 @@
 package conf
 
 const SERVER_IP = "127.0.0.1"
-const SERVER_PORT = "3000"
+const SERVER_PORT = "31415"
 
 const DB_IP = "127.0.0.1"
 const DB_PORT = "3306"

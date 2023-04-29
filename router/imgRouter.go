@@ -13,16 +13,6 @@ import (
 func ImgAPI(engine *gin.Engine) {
 	engine.StaticFS("/img", http.Dir("./tmp"))
 
-	engine.Any(fmt.Sprintf("/api/%s/img/", conf.API_VERSION), func(context *gin.Context) {
-		switch context.Request.Method {
-		case http.MethodGet:
-			context.JSON(http.StatusOK, gin.H{
-				"img":  "",
-				"path": "",
-			})
-		}
-	})
-
 	imgPath(engine, "gas")
 	imgPath(engine, "greedy")
 	imgPath(engine, "dijkstra")
