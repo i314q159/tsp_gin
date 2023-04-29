@@ -23,6 +23,12 @@ func TspRouter() http.Handler {
 	return engine
 }
 
+func WebRouter() http.Handler {
+	engine := gin.Default()
+	api.WebAPI(engine, "web/html")
+	return engine
+}
+
 func logger() {
 	dt := time.Now().Format("2006-01-02")
 	f, _ := os.Create("./log/" + dt + ".log")
