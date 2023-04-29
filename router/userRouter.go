@@ -14,6 +14,12 @@ func UserAPI(engine *gin.Engine) {
 		switch context.Request.Method {
 		case http.MethodPost:
 			database.UserLogin(context)
+		default:
+			context.JSON(http.StatusOK, gin.H{
+				"email":    "",
+				"password": "",
+				"msg":      "请使用此格式的POST来登录",
+			})
 		}
 	})
 
@@ -21,6 +27,13 @@ func UserAPI(engine *gin.Engine) {
 		switch context.Request.Method {
 		case http.MethodPost:
 			database.UserRegister(context)
+		default:
+			context.JSON(http.StatusOK, gin.H{
+				"email":    "",
+				"nickname": "",
+				"password": "",
+				"msg":      "请使用此格式的POST来注册",
+			})
 		}
 	})
 }
