@@ -1,20 +1,20 @@
-import random
 import sys
 from math import floor
 
 import matplotlib.pyplot as plt
 import numpy as np
 
+
 # 构建一个类保存遗传算法的初始化参数和函数计算
 class GAs(object):
     def __init__(
-        self,
-        data,
-        max_gen=200,
-        size_pop=200,
-        cross_prob=0.9,
-        pmuta_prob=0.01,
-        select_prob=0.8,
+            self,
+            data,
+            max_gen=200,
+            size_pop=200,
+            cross_prob=0.9,
+            pmuta_prob=0.01,
+            select_prob=0.8,
     ):
         self.max_gen = max_gen  # 最大迭代次数
         self.size_pop = size_pop  # 群体个数
@@ -84,9 +84,9 @@ class GAs(object):
         fit = 1.0 / (self.fitness)  # 适应度函数
         cumsum_fit = np.cumsum(fit)
         pick = (
-            cumsum_fit[-1]
-            / self.select_num
-            * (np.random.rand() + np.array(range(self.select_num)))
+                cumsum_fit[-1]
+                / self.select_num
+                * (np.random.rand() + np.array(range(self.select_num)))
         )
         i, j = 0, 0
         index = []
@@ -151,7 +151,7 @@ class GAs(object):
             left, right = min(r1, r2), max(r1, r2)
             sel = self.sub_sel[i, :].copy()
 
-            sel[left : right + 1] = self.sub_sel[i, left : right + 1][::-1]
+            sel[left: right + 1] = self.sub_sel[i, left: right + 1][::-1]
             if self.comp_fit(sel) < self.comp_fit(self.sub_sel[i, :]):
                 self.sub_sel[i, :] = sel
 
