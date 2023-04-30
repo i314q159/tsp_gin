@@ -21,7 +21,7 @@ func ImgAPI(engine *gin.Engine) {
 func imgPath(engine *gin.Engine, imgName string) {
 	engine.Any(fmt.Sprintf("/api/%s/img/%s", conf.API_VERSION, imgName), func(context *gin.Context) {
 		switch context.Request.Method {
-		case http.MethodPost:
+		case http.MethodGet:
 			cp := context.QueryArray("cp")
 
 			Algorithm(imgName, cp)
