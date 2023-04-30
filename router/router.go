@@ -9,6 +9,7 @@ import (
 func TspRouter() http.Handler {
 	engine := gin.New()
 	engine.Use(cors.Default())
+	//engine := gin.Default()
 
 	//api
 	UserAPI(engine)
