@@ -1,3 +1,4 @@
+import random
 import sys
 from math import floor
 
@@ -226,14 +227,17 @@ def gas(data):
     return path_short  # 返回遗传算法结果类
 
 
+def test():
+    np.random.seed(random.randint(0, 10))
+    data = np.random.rand(20, 2) * 10
+    gas(np.array(data))
+
+
 def run(data):
     gas(data)
 
 
 if __name__ == "__main__":
-    # np.random.seed(random.randint(0, 10))
-    # data = np.random.rand(20, 2) * 10
-
     args = sys.argv
     data = [[int(num) for num in seq.split(",")] for seq in args[1].split()]
 
