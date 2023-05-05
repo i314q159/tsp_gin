@@ -4,3 +4,4 @@
 go.sum
 tmp/*
 log/
+lib/__pycache__

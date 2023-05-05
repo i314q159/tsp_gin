@@ -54,15 +54,6 @@ def generate_graph(cities):
     return graph
 
 
-def test():
-    np.random.seed(random.randint(0, 10))
-    data = np.random.rand(20, 2) * 10
-    graph = generate_graph(data)
-    dist = dijkstra(graph, 0)
-    path = [i for i, _ in sorted(enumerate(dist), key=lambda x: x[1])]
-    plot_tsp(path, data)
-
-
 if __name__ == "__main__":
     args = sys.argv
     data = [[int(num) for num in seq.split(",")] for seq in args[1].split()]

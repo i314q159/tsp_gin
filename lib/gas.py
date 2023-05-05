@@ -226,13 +226,6 @@ def gas(data):
     # plt.show()
     return path_short  # 返回遗传算法结果类
 
-
-def test():
-    np.random.seed(random.randint(0, 10))
-    data = np.random.rand(20, 2) * 10
-    gas(np.array(data))
-
-
 def run(data):
     gas(data)
 

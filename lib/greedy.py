@@ -68,11 +68,7 @@ def plot_tsp(path, cities):
     # plt.show()
 
 
-def test():
-    np.random.seed(random.randint(0, 10))
-    data = np.random.rand(100, 2) * 10
-    path, length = tsp(data)
-    plot_tsp(path, data)
+
 
 
 if __name__ == "__main__":
