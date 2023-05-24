@@ -226,6 +226,7 @@ def gas(data):
     # plt.show()
     return path_short  # 返回遗传算法结果类
 
+
 def run(data):
     gas(data)
 

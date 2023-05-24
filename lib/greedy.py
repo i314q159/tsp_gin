@@ -68,9 +68,6 @@ def plot_tsp(path, cities):
     # plt.show()
 
 
-
-
-
 if __name__ == "__main__":
     args = sys.argv
     data = [[int(num) for num in seq.split(",")] for seq in args[1].split()]
