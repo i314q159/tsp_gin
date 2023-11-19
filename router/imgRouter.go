@@ -26,7 +26,7 @@ func imgPath(engine *gin.Engine, imgName string) {
 
 			Algorithm(imgName, cp)
 			context.JSON(http.StatusOK, gin.H{
-				"img":               "gas.png",
+				"img":               imgName,
 				"path":              fmt.Sprintf("http://%s:%s/img/%s.png", conf.SERVER_IP, conf.SERVER_PORT, imgName),
 				"coordinate_points": cp,
 			})
