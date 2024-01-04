@@ -40,7 +40,7 @@ func Algorithm(algorithm string, cp []string) {
 	// ["1,2" "3,4"] => "1,2 3,4"
 	args := strings.Replace(strings.Trim(fmt.Sprint(cp), "[]"), " ", " ", -1)
 
-	cmd := exec.Command("python", pyName, args)
+	cmd := exec.Command("python3", pyName, args)
 	out, err := cmd.CombinedOutput()
 	if err != nil {
 		fmt.Println(err)
